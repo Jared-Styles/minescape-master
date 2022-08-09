@@ -8,12 +8,17 @@ public class handlePosLimit : MonoBehaviour
     public float lowLimit;
     public GameObject cart;
     public float cartSpeed;
+    //public GameObject pullyLocation;
+
     private float originalSpeed;
     private bool cartShouldMove;
+    private bool timerActive;
+
     void Start()
     {
         cartShouldMove = false;
         originalSpeed = cartSpeed;
+        timerActive = false;
     }
 
     // Update is called once per frame
@@ -54,7 +59,11 @@ public class handlePosLimit : MonoBehaviour
         if(cartShouldMove == true)
         {
             MoveCart();
-            
+            if (timerActive == false)
+            {
+                TimerController.instance.BeginTimer();
+                timerActive = true;
+            }
         }
     }
 
@@ -62,8 +71,9 @@ public class handlePosLimit : MonoBehaviour
     {
         if (cartShouldMove == true)
         {
+
             cart.transform.position += new Vector3(cart.transform.position.x, cart.transform.position.y, cartSpeed);
-            cartSpeed += 0.0001f;
+            cartSpeed += 0.0003f;
             if (cartSpeed >= 0)
             {
                 //cartSpeed = 0;
@@ -71,6 +81,8 @@ public class handlePosLimit : MonoBehaviour
             }
         }
         
-        Debug.Log(cartSpeed);
+        //Debug.Log(cartSpeed);
     }
+
+  
 }

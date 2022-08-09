@@ -14,9 +14,10 @@ public class HoldObject : MonoBehaviour
     public GameObject anchor;
     GameObject lever;
     public GameObject hand;
+    public GameObject glove;
     public GameObject cubeCollider;
     //public GameObject handEmpty;
-
+    public Renderer rend;
     //private Transform cachedHandPosition;
     //public GameObject handAnchor;
 
@@ -29,6 +30,8 @@ public class HoldObject : MonoBehaviour
         canGrab = false;
         isHolding = false;
         hand.transform.rotation = Quaternion.Euler(0, 0, -90);
+        //rend = GetComponent<Renderer>();
+        //rend.enabled = true;
     }
 
 
@@ -44,7 +47,9 @@ public class HoldObject : MonoBehaviour
                 //lever.transform.parent = anchor.transform;
                 //hand.transform.position = new Vector3 (0, anchor.transform.position.y, 0);
                 lever.GetComponent<Rigidbody>().isKinematic = true;
+                //glove.transform.parent = lever.transform;
                 isHolding = true;
+                rend.enabled = false;
             }
         }
 
@@ -56,6 +61,8 @@ public class HoldObject : MonoBehaviour
                 //hand.transform.position = new Vector3(anchor.transform.position.x, anchor.transform.position.y, anchor.transform.position.z);
                 isHolding = false;
                 lever.transform.parent = null;
+                rend.enabled = true;
+                //glove.transform.parent = hand.transform;
             }
         }
 

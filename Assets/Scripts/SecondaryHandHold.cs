@@ -13,7 +13,7 @@ public class SecondaryHandHold : MonoBehaviour
     GameObject lever;
     public GameObject hand;
     public GameObject cubeCollider;
-   
+    public Renderer rend;
 
     void Start()
     {
@@ -38,6 +38,7 @@ public class SecondaryHandHold : MonoBehaviour
               
                 lever.GetComponent<Rigidbody>().isKinematic = true;
                 isHolding = true;
+                rend.enabled = false;
             }
         }
 
@@ -49,6 +50,7 @@ public class SecondaryHandHold : MonoBehaviour
                 
                 isHolding = false;
                 lever.transform.parent = null;
+                rend.enabled = true;
             }
         }
 
