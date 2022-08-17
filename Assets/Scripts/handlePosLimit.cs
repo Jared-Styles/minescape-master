@@ -9,16 +9,16 @@ public class handlePosLimit : MonoBehaviour
     public GameObject cart;
     public float cartSpeed;
     //public GameObject pullyLocation;
-
-    private float originalSpeed;
+    public float maxSpeed;
+    //private float originalSpeed;
     private bool cartShouldMove;
     private bool timerActive;
 
     void Start()
     {
-        cartShouldMove = false;
-        originalSpeed = cartSpeed;
-        timerActive = false;
+        //cartShouldMove = false;
+        //originalSpeed = cartSpeed;
+        //timerActive = false;
     }
 
     // Update is called once per frame
@@ -43,8 +43,8 @@ public class handlePosLimit : MonoBehaviour
         {
             this.transform.position = new Vector3(this.transform.position.x, highLimit, this.transform.position.z);
            //Debug.Log("high limit reached");
-            cartShouldMove = true;
-            cartSpeed = originalSpeed;
+            //cartShouldMove = true;
+            //cartSpeed = originalSpeed;
 
         }
 
@@ -52,11 +52,11 @@ public class handlePosLimit : MonoBehaviour
         {
             this.transform.position = new Vector3(this.transform.position.x, lowLimit, this.transform.position.z);
             //Debug.Log("low limit reached");
-            cartShouldMove = true;
-            cartSpeed = originalSpeed;
+            //cartShouldMove = true;
+            //cartSpeed = originalSpeed;
         }
 
-        if(cartShouldMove == true)
+       /* if(cartShouldMove == true)
         {
             MoveCart();
             if (timerActive == false)
@@ -64,25 +64,30 @@ public class handlePosLimit : MonoBehaviour
                 TimerController.instance.BeginTimer();
                 timerActive = true;
             }
-        }
+        }*/
     }
 
-    void MoveCart()
+    /*void MoveCart()
     {
         if (cartShouldMove == true)
         {
 
             cart.transform.position += new Vector3(cart.transform.position.x, cart.transform.position.y, cartSpeed);
-            cartSpeed += 0.0003f;
+            cartSpeed -= 0.0003f;
             if (cartSpeed >= 0)
             {
                 //cartSpeed = 0;
                 cartShouldMove = false;
             }
+
+            if (cartSpeed <= maxSpeed)
+            {
+                cartSpeed = maxSpeed;
+            }
         }
         
         //Debug.Log(cartSpeed);
-    }
+    } */
 
   
 }

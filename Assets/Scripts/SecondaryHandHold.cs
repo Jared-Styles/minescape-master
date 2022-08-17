@@ -9,11 +9,18 @@ public class SecondaryHandHold : MonoBehaviour
 {
     private bool canGrab;
     private bool isHolding;
+
     public GameObject anchor;
     GameObject lever;
-    public GameObject hand;
-    public GameObject cubeCollider;
-    public Renderer rend;
+    public GameObject glove;
+    public GameObject highCollider;
+    public GameObject lowCollider;
+
+    public Renderer handRend;
+    public Animator handAnim;
+
+    public Material transparentHand;
+    public Material solidHand;
 
     void Start()
     {
@@ -22,7 +29,10 @@ public class SecondaryHandHold : MonoBehaviour
             return;
         canGrab = false;
         isHolding = false;
-        hand.transform.rotation = Quaternion.Euler(0, 0, 90);
+        //hand.transform.rotation = Quaternion.Euler(0, 0, 90);
+        glove.GetComponent<Renderer>().material = transparentHand;
+        highCollider.gameObject.SetActive(false);
+        lowCollider.gameObject.SetActive(false);
     }
 
 
@@ -31,26 +41,36 @@ public class SecondaryHandHold : MonoBehaviour
 
         var device = VRDevice.Device;
 
-        if (device.SecondaryInputDevice.GetButtonDown(VRButton.Trigger))
+        if (device.SecondaryInputDevice.GetButtonDown(VRButton.Three) || device.SecondaryInputDevice.GetButtonDown(VRButton.Trigger))
         {
+            handAnim.SetTrigger("handClose");
             if (canGrab == true)
             {
               
                 lever.GetComponent<Rigidbody>().isKinematic = true;
                 isHolding = true;
-                rend.enabled = false;
+                //rend.enabled = false;
+                handRend.enabled = false;
+                glove.GetComponent<Renderer>().material = solidHand;
+                highCollider.gameObject.SetActive(true);
+                lowCollider.gameObject.SetActive(true);
             }
         }
 
 
-        if (device.SecondaryInputDevice.GetButtonUp(VRButton.Trigger))
+        if (device.SecondaryInputDevice.GetButtonUp(VRButton.Three) || device.SecondaryInputDevice.GetButtonUp(VRButton.Trigger))
         {
+            handAnim.SetTrigger("handOpen");
             if (isHolding == true)
             {
                 
                 isHolding = false;
                 lever.transform.parent = null;
-                rend.enabled = true;
+                //rend.enabled = true;
+                handRend.enabled = true;
+                glove.GetComponent<Renderer>().material = transparentHand;
+                highCollider.gameObject.SetActive(false);
+                lowCollider.gameObject.SetActive(false);
             }
         }
 
@@ -82,14 +102,14 @@ public class SecondaryHandHold : MonoBehaviour
             
             canGrab = true;
             lever = other.gameObject;
-            hand.transform.rotation = Quaternion.Euler(0, 0, 0);
+            //hand.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         canGrab = false;
-        hand.transform.rotation = Quaternion.Euler(0, 0, 90);
+        //hand.transform.rotation = Quaternion.Euler(0, 0, 90);
         
     }
 
