@@ -18,6 +18,7 @@ public class pumpMovement : MonoBehaviour
     private bool hightLimitReached;
     private bool lowLimitReached;
 
+    public Animator groundAnim;
     void Start()
     {
         cartShouldMove = false;
@@ -41,6 +42,7 @@ public class pumpMovement : MonoBehaviour
             Debug.Log("cart should move High");
             hightLimitReached = true;
             lowLimitReached = false;
+            
         }
        
         else if (this.transform.rotation == Quaternion.Euler(lowLimit, 0, 0) && lowLimitReached == false)
@@ -59,6 +61,8 @@ public class pumpMovement : MonoBehaviour
         if (cartShouldMove == true)
         {
             MoveCart();
+            //groundAnim.SetTrigger("move");
+            //groundAnim.speed = 0.1f;
             if (timerActive == false)
             {
                 TimerController.instance.BeginTimer();
