@@ -30,14 +30,14 @@ public class TimerController : MonoBehaviour
     void Start()
     {
         //timeCounter.text = "Time: 00:00.00";
-        timeCounterPro.text = "Time: 00:00.00";
+        timeCounterPro.text = "";
 
         timerGoing = false;
 
        // instructions.enabled = true;
 
         //timeCounter.enabled = false;
-        timeCounterPro.enabled = false;
+        timeCounterPro.enabled = true;
 
         //finalTime.enabled = false;
         finalTimePro.enabled = false;
@@ -51,7 +51,7 @@ public class TimerController : MonoBehaviour
         //instructions.enabled = false;
 
         //timeCounter.enabled = true;
-        timeCounterPro.enabled = true;
+        //timeCounterPro.enabled = true;
 
 
         timerGoing = true; 

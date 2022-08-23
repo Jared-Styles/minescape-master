@@ -25,6 +25,7 @@ public class HoldObject : MonoBehaviour
     public Material transparentHand;
     public Material solidHand;
 
+    public AudioSource gripSound;
     //public GameObject hand;
     //public GameObject cubeCollider;
     //public GameObject handEmpty;
@@ -67,6 +68,7 @@ public class HoldObject : MonoBehaviour
                 glove.GetComponent<Renderer>().material = solidHand;
                 highCollider.gameObject.SetActive(true);
                 lowCollider.gameObject.SetActive(true);
+                gripSound.Play();
             }
         }
 
@@ -78,7 +80,7 @@ public class HoldObject : MonoBehaviour
             {
                 //hand.transform.position = new Vector3(anchor.transform.position.x, anchor.transform.position.y, anchor.transform.position.z);
                 isHolding = false;
-                lever.transform.parent = null;
+                //lever.transform.parent = null;
                 //rend.enabled = true;
                 //glove.transform.parent = hand.transform;
                 handRend.enabled = true;

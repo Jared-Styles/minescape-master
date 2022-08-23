@@ -8,6 +8,9 @@ TagManager:
   - Handle1
   - Handle2
   - FinishLine
+  - FinishBoard
+  - SpeedUpOne
+  - SpeedUpTwo
   layers:
   - Default
   - TransparentFX

@@ -14,6 +14,8 @@ public class handlePosLimit : MonoBehaviour
     private bool cartShouldMove;
     private bool timerActive;
 
+
+    
     void Start()
     {
         //cartShouldMove = false;
@@ -42,9 +44,11 @@ public class handlePosLimit : MonoBehaviour
         if (this.transform.position.y >= highLimit)
         {
             this.transform.position = new Vector3(this.transform.position.x, highLimit, this.transform.position.z);
-           //Debug.Log("high limit reached");
+            //Debug.Log("high limit reached");
             //cartShouldMove = true;
             //cartSpeed = originalSpeed;
+            //pullySound.pitch = Random.Range(0.7f, 1.2f);
+            //pullySound.Play();
 
         }
 
@@ -54,6 +58,8 @@ public class handlePosLimit : MonoBehaviour
             //Debug.Log("low limit reached");
             //cartShouldMove = true;
             //cartSpeed = originalSpeed;
+            //pullySound.pitch = Random.Range(0.8f, 1.4f);
+            //pullySound.Play();
         }
 
        /* if(cartShouldMove == true)

@@ -22,6 +22,7 @@ public class SecondaryHandHold : MonoBehaviour
     public Material transparentHand;
     public Material solidHand;
 
+    public AudioSource gripSound;
     void Start()
     {
         var avatar = VRAvatar.Active;
@@ -54,6 +55,7 @@ public class SecondaryHandHold : MonoBehaviour
                 glove.GetComponent<Renderer>().material = solidHand;
                 highCollider.gameObject.SetActive(true);
                 lowCollider.gameObject.SetActive(true);
+                gripSound.Play();
             }
         }
 
