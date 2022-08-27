@@ -124,7 +124,7 @@ public class pumpMovement : MonoBehaviour
             
             //cartMoveSound.pitch = groundAnim.speed + soundSpeed;
 
-            //StartCoroutine(SlowDown());
+            StartCoroutine(SlowDown());
             //pumpActive = false;
             
         }
@@ -138,11 +138,11 @@ public class pumpMovement : MonoBehaviour
 
     
 
-   /* IEnumerator SlowDown()
+    IEnumerator SlowDown()
     {
         
             yield return new WaitForSeconds(4);
-            groundAnim.speed -= groundAnim.speed * 0.01f;
+            groundAnim.speed -= groundAnim.speed * 0.001f;
             //pumpActive = false;
         
          if(pumpActive == true)
@@ -152,7 +152,7 @@ public class pumpMovement : MonoBehaviour
             
             //yield return null;
           
-    }*/
+    }
 
    
 
