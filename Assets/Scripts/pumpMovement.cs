@@ -8,6 +8,7 @@ public class pumpMovement : MonoBehaviour
     public float lowLimit;
     public GameObject pump;
     public GameObject cart;
+    public GameObject fireworksParticle;
     public float cartSpeed;
     public float currentSpeed;
     public float soundSpeed;
@@ -20,22 +21,23 @@ public class pumpMovement : MonoBehaviour
     private bool lowLimitReached;
     private bool pumpActive;
     private bool moveSoundPlaying = false;
-
-    //public GameObject[] wayPoints;
-    //private int index = 0;
-
-    //public float speed;
+    private bool musicSlowDown = false;
+   
 
     public Animator groundAnim;
     public float maxSpeed;
 
     public AudioClip pullyUp;
     public AudioClip pullyDown;
+    public AudioSource music;
     //public AudioSource cartMoveSound;
     public AudioSource pullySound;
+    public AudioSource cartSound;
 
     public Renderer rendLeft;
     public Renderer rendRight;
+
+    public float animSpeed;
     void Start()
     {
         cartShouldMove = false;
@@ -50,7 +52,10 @@ public class pumpMovement : MonoBehaviour
         soundSpeed = -0.15f;
 
         pullySound = GetComponent<AudioSource>();
-       
+        animSpeed = 0;
+        groundAnim.speed = animSpeed;
+        fireworksParticle.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -60,49 +65,49 @@ public class pumpMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        groundAnim.speed = animSpeed;
         if (this.transform.rotation == Quaternion.Euler(highLimit, 0, 0) && hightLimitReached == false)
         {
+            pullySound.PlayOneShot(pullyUp);
             //pump.transform.rotation = Quaternion.Euler(13, 0, 0);
             cartShouldMove = true;
             Debug.Log("cart should move High");
             hightLimitReached = true;
             lowLimitReached = false;
-            groundAnim.speed += 0.08f;
+            //groundAnim.speed += 0.08f;
+            animSpeed += 0.08f;
             pumpActive = true;
-            //StopAllCoroutines();
-            //pullySound.pitch = Random.Range(0.7f, 1.2f);
-            pullySound.PlayOneShot(pullyUp);
+            
+            
 
         }
 
         else if (this.transform.rotation == Quaternion.Euler(lowLimit, 0, 0) && lowLimitReached == false)
         {
+            pullySound.PlayOneShot(pullyDown);
             //pump.transform.rotation = Quaternion.Euler(-13, 0, 0);
             cartShouldMove = true;
             Debug.Log("cart should move LOW");
             hightLimitReached = false;
             lowLimitReached = true;
-            groundAnim.speed += 0.08f;
+            //groundAnim.speed += 0.08f;
+            animSpeed += 0.08f;
             pumpActive = true;
-            //StopAllCoroutines();
-            //pullySound.pitch = Random.Range(0.8f, 1.4f);
-            pullySound.PlayOneShot(pullyDown);
+            
+            
 
         }
-        else
-        {
-            //cartShouldMove = false;
-        }
+       
 
         if (cartShouldMove == true)
         {
             //MoveCart();
             //groundAnim.SetTrigger("move");
             
-            if (groundAnim.speed > maxSpeed)
+            if (animSpeed > maxSpeed)
 
             {
-                groundAnim.speed = maxSpeed;
+                animSpeed = maxSpeed;
             }
             //groundAnim.speed = 0.1f;
             if (timerActive == false)
@@ -114,24 +119,35 @@ public class pumpMovement : MonoBehaviour
         }
         if (pumpActive == true)
         {
-            
 
-            if(moveSoundPlaying == false)
+            //groundAnim.speed -= groundAnim.speed * 0.001f;
+            animSpeed -= groundAnim.speed * 0.002f;
+           
+            if (moveSoundPlaying == false)
             {
-                //cartMoveSound.Play();
+                music.Play();
+                //music.volume += 0.1f;
+                cartSound.Play();
+
                 moveSoundPlaying = true;
             }
+
+           
             
+            if(musicSlowDown == true)
+            {
+                music.volume -= 0.001f;
+            }
             //cartMoveSound.pitch = groundAnim.speed + soundSpeed;
 
-            StartCoroutine(SlowDown());
+            //StartCoroutine(SlowDown());
             //pumpActive = false;
             
         }
-        
-        if(groundAnim.speed < 0)
+       
+        if (animSpeed < 0)
         {
-            groundAnim.speed = 0;
+            animSpeed = 0;
         }
   
     }
@@ -142,7 +158,7 @@ public class pumpMovement : MonoBehaviour
     {
         
             yield return new WaitForSeconds(4);
-            groundAnim.speed -= groundAnim.speed * 0.001f;
+            groundAnim.speed -=  0.001f;
             //pumpActive = false;
         
          if(pumpActive == true)
@@ -165,6 +181,10 @@ public class pumpMovement : MonoBehaviour
             rendLeft.enabled = false;
             rendRight.enabled = false;
             cartShouldMove = false;
+            fireworksParticle.SetActive(true);
+            musicSlowDown = true;
+            //music.volume -= 0.1f;
+            RenderSettings.fog = false;
         }
 
         if(other.gameObject.tag == "SpeedUpOne")
